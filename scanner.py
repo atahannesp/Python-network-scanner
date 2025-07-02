@@ -22,10 +22,21 @@ def scan(ip):
 
 
 def print_result(results_list):
-    print("IP\t\t\t\t MAC Address\n-------------------------------------------------------------------")
-    for client in results_list:
-        print(client["ip"] + "\t\t\t" + client["mac"])
+    if not results_list:
+        print("No devices found on the network")
+    else:
+        print("{:<20} {:<}".format("IP", "MAC Address"))
+        print("-" * 40)
+        for client in results_list:
+            print("{:<20} {:<}".format(client['ip'], client['mac']))
 
 options = get_arguments()
+
+if not options.target:
+    print("[-] Please specify a target using -t or --target")
+    exit()
+
+
 scan_result = scan(options.target)
+
 print_result(scan_result)
